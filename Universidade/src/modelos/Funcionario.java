@@ -12,6 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
@@ -35,6 +37,7 @@ public abstract class Funcionario {
 	
 	@NotNull
 	@Column(name = "faniversario")
+	@Temporal(TemporalType.DATE)
 	private Date data_aniversario;
 	
 	@NotEmpty
