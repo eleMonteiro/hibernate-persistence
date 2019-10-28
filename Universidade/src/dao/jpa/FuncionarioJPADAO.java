@@ -9,6 +9,4 @@ public class FuncionarioJPADAO extends GenericoJPADAO<Funcionario> implements Fu
 		super(Funcionario.class);
 	}
 
-	
-	
 }

@@ -21,30 +21,31 @@ public class Dependente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "depnumero")
 	private Integer numero;
-	
+
 	@NotNull
 	@Column(name = "depnome")
 	private String nome;
-	
+
 	@NotNull
 	@Column(name = "depsexo")
 	private String sexo;
-	
+
 	@NotNull
 	@Column(name = "depaniversario")
 	@Temporal(TemporalType.DATE)
 	private Date data_aniversario;
-	
+
 	@NotNull
 	@Column(name = "depparentesco")
 	private String grau_parentesco;
-	
+
 	@ManyToOne
-	@JoinColumn(name="func_numero")
+	@JoinColumn(name = "func_numero")
 	private Funcionario funcionario;
 
-	public Dependente() {	}
-	
+	public Dependente() {
+	}
+
 	public Dependente(String nome, String sexo, Date data_aniversario, String grau_parentesco) {
 		this.nome = nome;
 		this.sexo = sexo;
@@ -105,7 +106,5 @@ public class Dependente {
 		return "Dependente { Nome: " + nome + ", Sexo: " + sexo + ", Data Aniversario: " + data_aniversario
 				+ ", Grau Parentesco: " + grau_parentesco + " }";
 	}
-	
-	
-	
+
 }

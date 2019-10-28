@@ -8,5 +8,5 @@ public class DependenteJPADAO extends GenericoJPADAO<Dependente> implements Depe
 	public DependenteJPADAO() {
 		super(Dependente.class);
 	}
-	
+
 }

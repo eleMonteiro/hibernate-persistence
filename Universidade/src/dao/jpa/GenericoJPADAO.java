@@ -5,10 +5,10 @@ import java.util.List;
 import dao.GenericoDAO;
 import jpa.JPAUtil;
 
-public class GenericoJPADAO<T> implements GenericoDAO<T>{
+public class GenericoJPADAO<T> implements GenericoDAO<T> {
 
 	private Class<T> persistenceClass;
-	
+
 	public GenericoJPADAO(Class<T> persistenceClass) {
 		this.persistenceClass = persistenceClass;
 	}
@@ -25,7 +25,7 @@ public class GenericoJPADAO<T> implements GenericoDAO<T>{
 	@Override
 	public void deleteById(Integer id) {
 	}
-	
+
 	@Override
 	public T find(Object id) {
 		return null;
@@ -55,5 +55,5 @@ public class GenericoJPADAO<T> implements GenericoDAO<T>{
 	public void close() {
 		JPAUtil.closeEntityManager();
 	}
-	
+
 }

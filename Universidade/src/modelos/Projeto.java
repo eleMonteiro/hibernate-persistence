@@ -21,29 +21,30 @@ public class Projeto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "pnumero")
 	private Integer numero;
-	
+
 	@NotNull
 	@Column(name = "pnome")
 	private String nome;
-	
+
 	@NotEmpty
 	@Column(name = "tempoDesen")
 	private Integer tempo_desen;
-	
+
 	@ManyToOne
-	@JoinColumn(name="depart_numero")
+	@JoinColumn(name = "depart_numero")
 	private Departamento departamento;
 
 	@ManyToMany(mappedBy = "projetos")
 	private List<Pesquisador> pesquisadores;
-	
-	public Projeto() {	}
-	
+
+	public Projeto() {
+	}
+
 	public Projeto(String nome, Integer tempo_desen) {
 		this.nome = nome;
 		this.tempo_desen = tempo_desen;
 	}
-	
+
 	public Projeto(Integer numero, String nome, Integer tempo_desen) {
 		this.numero = numero;
 		this.nome = nome;
@@ -73,5 +74,5 @@ public class Projeto {
 	public void setTempoDesen(Integer tempo_desen) {
 		this.tempo_desen = tempo_desen;
 	}
-	
+
 }

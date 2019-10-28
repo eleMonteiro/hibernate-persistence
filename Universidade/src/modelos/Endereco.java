@@ -21,32 +21,23 @@ public class Endereco {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "endId")
 	private Integer id;
-	
+
 	@NotNull
 	@Column(name = "endRua")
 	private String rua;
-	
+
 	@NotEmpty
 	@Column(name = "endNumero")
 	private Integer numero;
-	
+
 	@NotNull
 	@Column(name = "endCidade")
 	private String cidade;
-	
+
 	@ManyToMany
-	@JoinTable(
-			name = "funcionario_endereco",
-			joinColumns = 
-				@JoinColumn(name = "endereco_id",
-				referencedColumnName = "endnumero"),
-			inverseJoinColumns = 
-				@JoinColumn(
-						name = "funcionario_id",
-						referencedColumnName = "fnumero")
-			)
+	@JoinTable(name = "funcionario_endereco", joinColumns = @JoinColumn(name = "endereco_id", referencedColumnName = "endnumero"), inverseJoinColumns = @JoinColumn(name = "funcionario_id", referencedColumnName = "fnumero"))
 	private List<Funcionario> funcionarios;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -83,7 +74,5 @@ public class Endereco {
 	public String toString() {
 		return "Endereco { Rua: " + rua + ", Numero: " + numero + ", Cidade: " + cidade + " }";
 	}
-	
-	
-	
+
 }

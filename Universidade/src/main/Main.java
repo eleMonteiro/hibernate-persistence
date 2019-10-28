@@ -15,11 +15,11 @@ public class Main {
 
 		try {
 			dDAO.beginTransaction();
-			
-			dDAO.save(new Departamento("FinanÃ§as"));
-			
+
+			dDAO.save(new Departamento("Finanças"));
+
 			dDAO.commit();
-		}catch (Exception e) {
+		} catch (Exception e) {
 			dDAO.rollback();
 			System.out.println(e.getMessage());
 		} finally {
@@ -30,7 +30,5 @@ public class Main {
 			}
 		}
 	}
-
-
 
 }

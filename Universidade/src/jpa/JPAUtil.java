@@ -13,7 +13,7 @@ public class JPAUtil {
 	public static EntityManager getEntityManager() {
 		EntityManager em = ems.get();
 
-		if( em == null) {
+		if (em == null) {
 			em = emf.createEntityManager();
 			ems.set(em);
 		}
@@ -23,28 +23,31 @@ public class JPAUtil {
 
 	public static void closeEntityManager() {
 		EntityManager em = ems.get();
-		if( em != null) {
+		if (em != null) {
 			EntityTransaction tx = em.getTransaction();
-			
-			if(tx.isActive())	tx.commit();
+
+			if (tx.isActive())
+				tx.commit();
 			em.close();
-			
+
 			ems.set(null);
 		}
 	}
-	
+
 	public static void beginTransaction() {
 		getEntityManager().getTransaction().begin();
 	}
 
 	public static void commit() {
 		EntityTransaction tx = getEntityManager().getTransaction();
-		if(tx.isActive()) tx.commit();
+		if (tx.isActive())
+			tx.commit();
 	}
-	
+
 	public static void rollback() {
 		EntityTransaction tx = getEntityManager().getTransaction();
-		if(tx.isActive()) tx.rollback();
+		if (tx.isActive())
+			tx.rollback();
 	}
 
 }

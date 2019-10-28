@@ -8,5 +8,5 @@ public class EnderecoJPADAO extends GenericoJPADAO<Endereco> implements Endereco
 	public EnderecoJPADAO() {
 		super(Endereco.class);
 	}
-	
+
 }

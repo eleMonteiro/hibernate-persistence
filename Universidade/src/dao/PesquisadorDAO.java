@@ -5,4 +5,3 @@ import modelos.Pesquisador;
 public interface PesquisadorDAO extends GenericoDAO<Pesquisador> {
 
 }
-

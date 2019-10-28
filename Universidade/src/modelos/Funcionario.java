@@ -18,7 +18,6 @@ import javax.persistence.TemporalType;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 
-
 @MappedSuperclass
 public abstract class Funcionario {
 
@@ -26,43 +25,44 @@ public abstract class Funcionario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "fnumero")
 	private Integer numero;
-	
+
 	@NotNull
 	@Column(name = "fnome")
 	private String nome;
-	
+
 	@NotNull
 	@Column(name = "fsexo")
 	private String sexo;
-	
+
 	@NotNull
 	@Column(name = "faniversario")
 	@Temporal(TemporalType.DATE)
 	private Date data_aniversario;
-	
+
 	@NotEmpty
 	@Column(name = "fsalario")
 	private Double salario;
 
 	@ManyToOne
-	@JoinColumn(name="depart_numero")
+	@JoinColumn(name = "depart_numero")
 	private Departamento departamento;
-	
-	@OneToMany(mappedBy="funcionario")
+
+	@OneToMany(mappedBy = "funcionario")
 	private List<Dependente> dependentes;
-	
+
 	@ManyToMany(mappedBy = "funcionarios")
 	private List<Endereco> enderecos;
-	
-	public Funcionario() { }
-		
+
+	public Funcionario() {
+	}
+
 	public Funcionario(String nome, String sexo, Date data_aniversario, Double salario) {
 		this.nome = nome;
 		this.sexo = sexo;
 		this.data_aniversario = data_aniversario;
 		this.salario = salario;
 	}
-	
+
 	public Funcionario(Integer numero, String nome, String sexo, Date data_aniversario, Double salario) {
 		this.numero = numero;
 		this.nome = nome;
@@ -70,7 +70,7 @@ public abstract class Funcionario {
 		this.data_aniversario = data_aniversario;
 		this.salario = salario;
 	}
-	
+
 	public Integer getNumero() {
 		return numero;
 	}
@@ -110,5 +110,5 @@ public abstract class Funcionario {
 	public void setSalario(Double salario) {
 		this.salario = salario;
 	}
-	
+
 }
