@@ -2,12 +2,10 @@ package modelos;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
@@ -19,19 +17,15 @@ public class Projeto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "pnumero")
 	private Integer numero;
 
 	@NotNull
-	@Column(name = "pnome")
 	private String nome;
 
 	@NotEmpty
-	@Column(name = "tempoDesen")
-	private Integer tempo_desen;
+	private Integer tempo;
 
 	@ManyToOne
-	@JoinColumn(name = "depart_numero")
 	private Departamento departamento;
 
 	@ManyToMany(mappedBy = "projetos")
@@ -42,13 +36,19 @@ public class Projeto {
 
 	public Projeto(String nome, Integer tempo_desen) {
 		this.nome = nome;
-		this.tempo_desen = tempo_desen;
+		this.tempo = tempo_desen;
 	}
 
 	public Projeto(Integer numero, String nome, Integer tempo_desen) {
 		this.numero = numero;
 		this.nome = nome;
-		this.tempo_desen = tempo_desen;
+		this.tempo = tempo_desen;
+	}
+
+	public Projeto(String nome, Integer tempo_desen, Departamento departamento) {
+		this.nome = nome;
+		this.tempo = tempo_desen;
+		this.departamento = departamento;
 	}
 
 	public Integer getNumero() {
@@ -67,12 +67,12 @@ public class Projeto {
 		this.nome = nome;
 	}
 
-	public Integer getTempoDesen() {
-		return tempo_desen;
+	public Integer getTempo() {
+		return tempo;
 	}
 
-	public void setTempoDesen(Integer tempo_desen) {
-		this.tempo_desen = tempo_desen;
+	public void setTempo(Integer tempo) {
+		this.tempo = tempo;
 	}
 
 }

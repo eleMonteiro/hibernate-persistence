@@ -2,7 +2,6 @@ package modelos;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,24 +18,31 @@ public class Endereco {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "endId")
 	private Integer id;
 
 	@NotNull
-	@Column(name = "endRua")
 	private String rua;
 
 	@NotEmpty
-	@Column(name = "endNumero")
 	private Integer numero;
 
 	@NotNull
-	@Column(name = "endCidade")
 	private String cidade;
 
 	@ManyToMany
-	@JoinTable(name = "funcionario_endereco", joinColumns = @JoinColumn(name = "endereco_id", referencedColumnName = "endnumero"), inverseJoinColumns = @JoinColumn(name = "funcionario_id", referencedColumnName = "fnumero"))
+	@JoinTable(name = "funcionario_endereco", joinColumns = @JoinColumn(name = "endereco_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "funcionario_id", referencedColumnName = "numeroFuncionario"))
 	private List<Funcionario> funcionarios;
+
+	public Endereco() {
+
+	}
+
+	public Endereco(String rua, Integer numero, String cidade) {
+		super();
+		this.rua = rua;
+		this.numero = numero;
+		this.cidade = cidade;
+	}
 
 	public Integer getId() {
 		return id;

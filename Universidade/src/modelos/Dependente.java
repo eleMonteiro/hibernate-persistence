@@ -2,12 +2,10 @@ package modelos;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,28 +17,22 @@ public class Dependente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "depnumero")
 	private Integer numero;
 
 	@NotNull
-	@Column(name = "depnome")
 	private String nome;
 
 	@NotNull
-	@Column(name = "depsexo")
 	private String sexo;
 
 	@NotNull
-	@Column(name = "depaniversario")
 	@Temporal(TemporalType.DATE)
-	private Date data_aniversario;
+	private Date dataAniversario;
 
 	@NotNull
-	@Column(name = "depparentesco")
-	private String grau_parentesco;
+	private String grauParentesco;
 
 	@ManyToOne
-	@JoinColumn(name = "func_numero")
 	private Funcionario funcionario;
 
 	public Dependente() {
@@ -49,16 +41,16 @@ public class Dependente {
 	public Dependente(String nome, String sexo, Date data_aniversario, String grau_parentesco) {
 		this.nome = nome;
 		this.sexo = sexo;
-		this.data_aniversario = data_aniversario;
-		this.grau_parentesco = grau_parentesco;
+		this.dataAniversario = data_aniversario;
+		this.grauParentesco = grau_parentesco;
 	}
 
 	public Dependente(Integer numero, String nome, String sexo, Date data_aniversario, String grau_parentesco) {
 		this.numero = numero;
 		this.nome = nome;
 		this.sexo = sexo;
-		this.data_aniversario = data_aniversario;
-		this.grau_parentesco = grau_parentesco;
+		this.dataAniversario = data_aniversario;
+		this.grauParentesco = grau_parentesco;
 	}
 
 	public Integer getNumero() {
@@ -85,26 +77,26 @@ public class Dependente {
 		this.sexo = sexo;
 	}
 
-	public Date getData_aniversario() {
-		return data_aniversario;
+	public Date getDataAniversario() {
+		return dataAniversario;
 	}
 
-	public void setData_aniversario(Date data_aniversario) {
-		this.data_aniversario = data_aniversario;
+	public void setDataAniversario(Date dataAniversario) {
+		this.dataAniversario = dataAniversario;
 	}
 
-	public String getGrau_parentesco() {
-		return grau_parentesco;
+	public String getGrauParentesco() {
+		return grauParentesco;
 	}
 
-	public void setGrau_parentesco(String grau_parentesco) {
-		this.grau_parentesco = grau_parentesco;
+	public void setGrauParentesco(String grauParentesco) {
+		this.grauParentesco = grauParentesco;
 	}
 
 	@Override
 	public String toString() {
-		return "Dependente { Nome: " + nome + ", Sexo: " + sexo + ", Data Aniversario: " + data_aniversario
-				+ ", Grau Parentesco: " + grau_parentesco + " }";
+		return "Dependente { Nome: " + nome + ", Sexo: " + sexo + ", Data Aniversario: " + dataAniversario
+				+ ", Grau Parentesco: " + grauParentesco + " }";
 	}
 
 }

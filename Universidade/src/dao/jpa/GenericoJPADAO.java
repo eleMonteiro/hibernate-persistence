@@ -2,6 +2,8 @@ package dao.jpa;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaQuery;
+
 import dao.GenericoDAO;
 import jpa.JPAUtil;
 
@@ -14,26 +16,31 @@ public class GenericoJPADAO<T> implements GenericoDAO<T> {
 	}
 
 	@Override
-	public void save(T entity) {
-		JPAUtil.getEntityManager().merge(entity);
+	public void save(T t) {
+		JPAUtil.getEntityManager().merge(t);
 	}
 
 	@Override
-	public void delete(T entity) {
+	public void delete(T t) {
+		JPAUtil.getEntityManager().remove(JPAUtil.getEntityManager().merge(t));
 	}
 
 	@Override
 	public void deleteById(Integer id) {
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public T find(Object id) {
-		return null;
+		return JPAUtil.getEntityManager().find(persistenceClass, id);
 	}
 
 	@Override
 	public List<T> findAll() {
-		return null;
+		CriteriaQuery<T> criteriaQuery = JPAUtil.getEntityManager().getCriteriaBuilder().createQuery(persistenceClass);
+		criteriaQuery.from(persistenceClass);
+
+		return JPAUtil.getEntityManager().createQuery(criteriaQuery).getResultList();
 	}
 
 	@Override

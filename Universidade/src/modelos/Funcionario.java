@@ -1,16 +1,18 @@
 package modelos;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,33 +20,29 @@ import javax.persistence.TemporalType;
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
 
-@MappedSuperclass
-public abstract class Funcionario {
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Funcionario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "fnumero")
-	private Integer numero;
+	private Integer numeroFuncionario;
 
 	@NotNull
-	@Column(name = "fnome")
 	private String nome;
 
 	@NotNull
-	@Column(name = "fsexo")
 	private String sexo;
 
 	@NotNull
-	@Column(name = "faniversario")
 	@Temporal(TemporalType.DATE)
-	private Date data_aniversario;
+	private Date dataAniversario;
 
 	@NotEmpty
-	@Column(name = "fsalario")
 	private Double salario;
 
 	@ManyToOne
-	@JoinColumn(name = "depart_numero")
+	@JoinColumn(name = "numero")
 	private Departamento departamento;
 
 	@OneToMany(mappedBy = "funcionario")
@@ -54,29 +52,35 @@ public abstract class Funcionario {
 	private List<Endereco> enderecos;
 
 	public Funcionario() {
+		dependentes = new ArrayList<Dependente>();
+		enderecos = new ArrayList<Endereco>();
 	}
 
 	public Funcionario(String nome, String sexo, Date data_aniversario, Double salario) {
 		this.nome = nome;
 		this.sexo = sexo;
-		this.data_aniversario = data_aniversario;
+		this.dataAniversario = data_aniversario;
 		this.salario = salario;
+		dependentes = new ArrayList<Dependente>();
+		enderecos = new ArrayList<Endereco>();
 	}
 
 	public Funcionario(Integer numero, String nome, String sexo, Date data_aniversario, Double salario) {
-		this.numero = numero;
+		this.numeroFuncionario = numero;
 		this.nome = nome;
 		this.sexo = sexo;
-		this.data_aniversario = data_aniversario;
+		this.dataAniversario = data_aniversario;
 		this.salario = salario;
+		dependentes = new ArrayList<Dependente>();
+		enderecos = new ArrayList<Endereco>();
 	}
 
 	public Integer getNumero() {
-		return numero;
+		return numeroFuncionario;
 	}
 
 	public void setNumero(Integer numero) {
-		this.numero = numero;
+		this.numeroFuncionario = numero;
 	}
 
 	public String getNome() {
@@ -96,11 +100,11 @@ public abstract class Funcionario {
 	}
 
 	public Date getDataAniversario() {
-		return data_aniversario;
+		return dataAniversario;
 	}
 
-	public void setDataAniversario(Date data_aniversario) {
-		this.data_aniversario = data_aniversario;
+	public void setDataAniversario(Date dataAniversario) {
+		this.dataAniversario = dataAniversario;
 	}
 
 	public Double getSalario() {
@@ -109,6 +113,17 @@ public abstract class Funcionario {
 
 	public void setSalario(Double salario) {
 		this.salario = salario;
+	}
+
+	public void addEndereco(Endereco endereco) {
+		enderecos.add(endereco);
+	}
+
+	@Override
+	public String toString() {
+		return "Funcionario [numero=" + numeroFuncionario + ", nome=" + nome + ", sexo=" + sexo + ", dataAniversario="
+				+ dataAniversario + ", salario=" + salario + ", departamento=" + departamento + ", dependentes="
+				+ dependentes + ", enderecos=" + enderecos + "]";
 	}
 
 }

@@ -7,31 +7,19 @@ import javax.persistence.Persistence;
 
 public class JPAUtil {
 
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("dev");
-	private static ThreadLocal<EntityManager> ems = new ThreadLocal<EntityManager>();
+	private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("dev");
+
+	private static ThreadLocal<EntityManager> threadLocal = new ThreadLocal<EntityManager>();
 
 	public static EntityManager getEntityManager() {
-		EntityManager em = ems.get();
+		EntityManager entityManager = threadLocal.get();
 
-		if (em == null) {
-			em = emf.createEntityManager();
-			ems.set(em);
+		if (entityManager == null) {
+			entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
+			threadLocal.set(entityManager);
 		}
 
-		return em;
-	}
-
-	public static void closeEntityManager() {
-		EntityManager em = ems.get();
-		if (em != null) {
-			EntityTransaction tx = em.getTransaction();
-
-			if (tx.isActive())
-				tx.commit();
-			em.close();
-
-			ems.set(null);
-		}
+		return entityManager;
 	}
 
 	public static void beginTransaction() {
@@ -39,15 +27,32 @@ public class JPAUtil {
 	}
 
 	public static void commit() {
-		EntityTransaction tx = getEntityManager().getTransaction();
-		if (tx.isActive())
-			tx.commit();
+		EntityTransaction entityTransaction = getEntityManager().getTransaction();
+
+		if (entityTransaction.isActive())
+			entityTransaction.commit();
 	}
 
 	public static void rollback() {
-		EntityTransaction tx = getEntityManager().getTransaction();
-		if (tx.isActive())
-			tx.rollback();
+		EntityTransaction entityTransaction = getEntityManager().getTransaction();
+
+		if (entityTransaction.isActive())
+			entityTransaction.rollback();
+	}
+
+	public static void closeEntityManager() {
+		EntityManager entityManager = threadLocal.get();
+
+		if (entityManager != null) {
+			EntityTransaction tx = entityManager.getTransaction();
+
+			if (tx.isActive()) {
+				tx.commit();
+			}
+
+			entityManager.close();
+			threadLocal.set(null);
+		}
 	}
 
 }
