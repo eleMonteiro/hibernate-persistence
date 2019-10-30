@@ -15,6 +15,7 @@ import dao.jpa.FuncionarioJPADAO;
 import dao.jpa.LimpezaJPADAO;
 import dao.jpa.PesquisadorJPADAO;
 import dao.jpa.SecretarioJPADAO;
+import modelos.Departamento;
 import modelos.Endereco;
 import modelos.Funcionario;
 import modelos.Limpeza;
@@ -24,7 +25,7 @@ import modelos.Secretario;
 public class FuncionarioController {
 
 	public void adicionarPesquisador(String nome, String rua, Integer numeroCasa, String cidade, String sexo,
-			Date dataAniversario, Double salario, String areaAtuacao) {
+			Date dataAniversario, Double salario, String areaAtuacao, Integer departamento) {
 		EnderecoDAO enderecoDAO = new EnderecoJPADAO();
 		PesquisadorDAO pesquisadorDAO = new PesquisadorJPADAO();
 
@@ -32,6 +33,8 @@ public class FuncionarioController {
 
 		Pesquisador pesquisador = new Pesquisador(nome, sexo, dataAniversario, salario, areaAtuacao);
 		pesquisador.addEndereco(enderecoFuncionario);
+		pesquisador.setDepartamento(new Departamento(departamento));
+		
 
 		try {
 			enderecoDAO.beginTransaction();
@@ -57,7 +60,7 @@ public class FuncionarioController {
 	}
 
 	public void adicionarSecretario(String nome, String rua, Integer numeroCasa, String cidade, String sexo,
-			Date dataAniversario, Double salario, String grauEscolaridade) {
+			Date dataAniversario, Double salario, String grauEscolaridade, Integer departamento) {
 		EnderecoDAO enderecoDAO = new EnderecoJPADAO();
 		SecretarioDAO secretarioDAO = new SecretarioJPADAO();
 
@@ -65,6 +68,7 @@ public class FuncionarioController {
 
 		Secretario secretario = new Secretario(nome, sexo, dataAniversario, salario, grauEscolaridade);
 		secretario.addEndereco(enderecoFuncionario);
+		secretario.setDepartamento(new Departamento(departamento));
 
 		try {
 			enderecoDAO.beginTransaction();
@@ -90,14 +94,15 @@ public class FuncionarioController {
 	}
 
 	public void adicionarFuncionarioLimpeza(String nome, String rua, Integer numeroCasa, String cidade, String sexo,
-			Date dataAniversario, Double salario, Integer jornadaTrabalho, Integer idGerente) {
+			Date dataAniversario, Double salario, Integer jornadaTrabalho, Integer idGerente, String cargo, Integer departamento) {
 		EnderecoDAO enderecoDAO = new EnderecoJPADAO();
 		LimpezaDAO limpezaDAO = new LimpezaJPADAO();
 
 		Endereco enderecoFuncionario = new Endereco(rua, numeroCasa, cidade);
 
-		Limpeza limpeza = new Limpeza(nome, sexo, dataAniversario, salario, jornadaTrabalho);
+		Limpeza limpeza = new Limpeza(nome, sexo, dataAniversario, salario, jornadaTrabalho, cargo);
 		limpeza.addEndereco(enderecoFuncionario);
+		limpeza.setDepartamento(new Departamento(departamento));
 
 		try {
 			enderecoDAO.beginTransaction();

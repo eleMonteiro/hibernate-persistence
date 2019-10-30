@@ -14,6 +14,9 @@ public class Limpeza extends Funcionario {
 	@NotNull
 	private Integer jornadaTrabalho;
 
+	@NotNull
+	private String cargo;
+	
 	@ManyToOne
 	@JoinColumn(name = "gerente_id")
 	private Limpeza gerente;
@@ -27,6 +30,12 @@ public class Limpeza extends Funcionario {
 		this.jornadaTrabalho = joranada_trabalho;
 	}
 
+	public Limpeza(String nome, String sexo, Date data_aniversario, Double salario, Integer joranada_trabalho, String cargo) {
+		super(nome, sexo, data_aniversario, salario);
+		this.jornadaTrabalho = joranada_trabalho;
+		this.cargo = cargo;
+	}
+	
 	public Integer getJornadaTrabalho() {
 		return jornadaTrabalho;
 	}

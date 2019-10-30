@@ -19,7 +19,9 @@ public class Pesquisador extends Funcionario {
 	private String areaAtuacao;
 
 	@ManyToMany
-	@JoinTable(name = "pesquisador_projeto", joinColumns = @JoinColumn(name = "pesquisador_id"), inverseJoinColumns = @JoinColumn(name = "projeto_id"))
+	@JoinTable(name = "pesquisador_projeto", 
+			   joinColumns = @JoinColumn(name = "pesquisador_id"), 
+			   inverseJoinColumns = @JoinColumn(name = "projeto_id"))
 	private List<Projeto> projetos;
 
 	public Pesquisador() {
@@ -43,5 +45,4 @@ public class Pesquisador extends Funcionario {
 	public String toString() {
 		return super.toString() + " > Pesquisador [areaAtuacao=" + areaAtuacao + ", projetos=" + projetos + "]";
 	}
-
 }

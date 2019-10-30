@@ -184,6 +184,15 @@ public class Main {
 						System.out.println("O salario informado nao e valido");
 						break;
 					}
+					
+					System.out.println("Informe o departamento do funcionario: ");
+					Integer departamento;
+					try {
+						departamento = Integer.parseInt(scanner.nextLine());
+					} catch (NumberFormatException e) {
+						System.out.println("O salario informado nao e valido");
+						break;
+					}
 
 					System.out.println("Informe o tipo do funcionario: ");
 					System.out.println(
@@ -197,7 +206,7 @@ public class Main {
 
 						new FuncionarioController().adicionarPesquisador(nomeFuncionario, ruaFuncionario,
 								numeroCasaFuncionario, cidadeFuncionario, sexoFuncionario, dataAniversarioFuncionario,
-								salarioFuncionario, areaAtuacaoPesquisador);
+								salarioFuncionario, areaAtuacaoPesquisador, departamento);
 
 						System.out.println("Pesquisador salvo com sucesso");
 					} else if (tipoFuncionario.equals("1")) {
@@ -206,7 +215,7 @@ public class Main {
 
 						new FuncionarioController().adicionarSecretario(nomeFuncionario, ruaFuncionario,
 								numeroCasaFuncionario, cidadeFuncionario, sexoFuncionario, dataAniversarioFuncionario,
-								salarioFuncionario, grauEscolaridadeSecretario);
+								salarioFuncionario, grauEscolaridadeSecretario, departamento);
 
 						System.out.println("Secretario salvo com sucesso");
 					} else if (tipoFuncionario.equals("2")) {
@@ -216,6 +225,15 @@ public class Main {
 							jornadaTrabalhoFuncionarioLimpeza = Integer.parseInt(scanner.nextLine());
 						} catch (NumberFormatException e) {
 							System.out.println("A jornada de trabalho informada nao e valida");
+							break;
+						}
+						
+						System.out.println("Informe o cargo do funcionario de limpeza: ");
+						String cargo;
+						try {
+							cargo = scanner.nextLine();
+						} catch (Exception e) {
+							System.out.println("O cargo informado nao e valida");
 							break;
 						}
 
@@ -230,7 +248,7 @@ public class Main {
 
 						new FuncionarioController().adicionarFuncionarioLimpeza(nomeFuncionario, ruaFuncionario,
 								numeroCasaFuncionario, cidadeFuncionario, sexoFuncionario, dataAniversarioFuncionario,
-								salarioFuncionario, jornadaTrabalhoFuncionarioLimpeza, idGerenteFuncionarioLimpeza);
+								salarioFuncionario, jornadaTrabalhoFuncionarioLimpeza, idGerenteFuncionarioLimpeza, cargo, departamento);
 
 						System.out.println("Funcionario de limpeza salvo com sucesso");
 					}
@@ -370,26 +388,4 @@ public class Main {
 
 		scanner.close();
 	}
-
-//	private static void insertDepartamento() {
-//		DepartamentoDAO dDAO = new DepartamentoJPADAO();
-//
-//		try {
-//			dDAO.beginTransaction();
-//
-//			dDAO.save(new Departamento("Finanças"));
-//
-//			dDAO.commit();
-//		} catch (Exception e) {
-//			dDAO.rollback();
-//			System.out.println(e.getMessage());
-//		} finally {
-//			try {
-//				dDAO.close();
-//			} catch (Exception e) {
-//				System.out.println(e.getMessage());
-//			}
-//		}
-//	}
-
 }

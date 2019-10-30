@@ -75,4 +75,11 @@ public class Projeto {
 		this.tempo = tempo;
 	}
 
+	@Override
+	public String toString() {
+		return "Projeto { Numero: " + numero + ", Nome: " + nome + ", Tempo: " + tempo + " }";
+	}
+
+	
+	
 }
