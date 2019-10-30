@@ -4,12 +4,16 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import dao.FuncionarioDAO;
 import dao.ProjetoDAO;
+import dao.TrabalhoDAO;
 import dao.jpa.FuncionarioJPADAO;
 import dao.jpa.ProjetoJPADAO;
+import dao.jpa.TrabalhoJPADAO;
 import modelos.Departamento;
 import modelos.Pesquisador;
 import modelos.Projeto;
+import modelos.Trabalho;
 
 public class ProjetoController {
 
@@ -59,19 +63,22 @@ public class ProjetoController {
 		}
 	}
 	
-	public void adicionarPesquisadorProjeto(Integer numero, Integer numeroPesquisador) {
+	public void adicionarPesquisadorProjeto(Integer numero, Integer numeroPesquisador, Integer horas) {
 		ProjetoDAO projetoDAO = new ProjetoJPADAO();
+		FuncionarioDAO pesquisadorDAO = new FuncionarioJPADAO();
+		TrabalhoDAO trabalhoDAO = new TrabalhoJPADAO();
 		
 		try {
 			projetoDAO.beginTransaction();
 			
 			Projeto projeto = projetoDAO.find(numero);
-			Pesquisador pesquisador = (Pesquisador) new FuncionarioJPADAO().find(numeroPesquisador);
+			Pesquisador pesquisador = (Pesquisador) pesquisadorDAO.find(numeroPesquisador);
 			
-			projeto.addPesquisador(pesquisador);
-			pesquisador.addProjeto(projeto);
+			Trabalho trabalho = new Trabalho(horas);
+			trabalho.setProjeto(projeto);
+			trabalho.setPesquisador(pesquisador);
 			
-			projetoDAO.save(projeto);
+			trabalhoDAO.save(trabalho);
 			
 			
 			projetoDAO.commit();

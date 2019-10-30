@@ -425,15 +425,18 @@ public class Main {
 					break;
 										
 				case "6":
-					System.out.println("Informe o numero do projeto: ");
+					
 
 					try {
+						System.out.println("Informe o numero do projeto: ");
 						Integer numero = Integer.parseInt(scanner.nextLine());
 						System.out.println("Informe o numero do pesquisador: ");
 						Integer numeroPesquisador = Integer.parseInt(scanner.nextLine());
-	
+						System.out.println("Informe o numero de horas trabalhadas: ");
+						Integer horasTrabalhadas = Integer.parseInt(scanner.nextLine());
+
 						
-						new ProjetoController().adicionarPesquisadorProjeto(numero, numeroPesquisador);
+						new ProjetoController().adicionarPesquisadorProjeto(numero, numeroPesquisador, horasTrabalhadas);
 
 						System.out.println("Cadastrado!");
 					} catch (NumberFormatException e) {

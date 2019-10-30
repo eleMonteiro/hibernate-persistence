@@ -5,10 +5,12 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import org.hibernate.validator.NotNull;
 
 @Entity
+@PrimaryKeyJoinColumn(name = "numero")
 public class Limpeza extends Funcionario {
 
 	@NotNull

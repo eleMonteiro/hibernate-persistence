@@ -5,9 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 import org.hibernate.validator.NotNull;
@@ -19,20 +17,17 @@ public class Pesquisador extends Funcionario {
 	@NotNull
 	private String areaAtuacao;
 
-	@ManyToMany
-	@JoinTable(name = "pesquisador_projeto", 
-			   joinColumns = @JoinColumn(name = "pesquisador_id"), 
-			   inverseJoinColumns = @JoinColumn(name = "projeto_id"))
-	private List<Projeto> projetos;
+	@OneToMany(mappedBy = "pesquisador")
+	private List<Trabalho> trabalhos;
 
 	public Pesquisador() {
-		this.projetos = new ArrayList<Projeto>();
+		this.trabalhos = new ArrayList<Trabalho>();
 	}
 
 	public Pesquisador(String nome, String sexo, Date data_aniversario, Double salario, String area_atuacao) {
 		super(nome, sexo, data_aniversario, salario);
 		this.areaAtuacao = area_atuacao;
-		this.projetos = new ArrayList<Projeto>();
+		this.trabalhos = new ArrayList<Trabalho>();
 	}
 
 	public String getAreaAtuacao() {
@@ -43,12 +38,12 @@ public class Pesquisador extends Funcionario {
 		this.areaAtuacao = areaAtuacao;
 	}
 
-	public void addProjeto(Projeto projeto) {
-		this.projetos.add(projeto);
+	public void addProjeto(Trabalho trabalho) {
+		this.trabalhos.add(trabalho);
 	}
 	
 	@Override
 	public String toString() {
-		return super.toString() + " > Pesquisador [areaAtuacao=" + areaAtuacao + ", projetos=" + projetos + "]";
+		return super.toString() + " > Pesquisador [areaAtuacao=" + areaAtuacao + ", projetos= "+ trabalhos+"]";
 	}
 }
