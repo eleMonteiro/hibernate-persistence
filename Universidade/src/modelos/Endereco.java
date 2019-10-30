@@ -4,8 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.validator.NotEmpty;
 import org.hibernate.validator.NotNull;
@@ -26,12 +25,7 @@ public class Endereco {
 	@NotNull
 	private String cidade;
 
-//	@ManyToMany
-//	@JoinTable(name = "funcionario_endereco", joinColumns = @JoinColumn(name = "endereco_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "funcionario_id", referencedColumnName = "numeroFuncionario"))
-//	private List<Funcionario> funcionarios;
-	
-	@ManyToOne
-	@JoinColumn(name = "numeroFuncionario")
+	@OneToOne(mappedBy = "enderecos")
 	private Funcionario funcionario_endereco;
 
 	public Endereco() {
@@ -75,6 +69,14 @@ public class Endereco {
 
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario_endereco;
+	}
+
+	public void setFuncionario(Funcionario funcionario_endereco) {
+		this.funcionario_endereco = funcionario_endereco;
 	}
 
 	@Override

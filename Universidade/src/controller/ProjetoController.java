@@ -100,6 +100,12 @@ public class ProjetoController {
 		return projetoDAO.find(numero);
 	}
 
+	public List<Projeto> buscarProjetoPorDepartamento(Integer numero) {
+		ProjetoDAO projetoDAO = new ProjetoJPADAO();
+
+		return projetoDAO.findByDepartamento(numero);
+	}
+
 	
 
 }

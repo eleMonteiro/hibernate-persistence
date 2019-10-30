@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -47,12 +49,12 @@ public class Funcionario {
 	@OneToMany(mappedBy = "funcionario")
 	private List<Dependente> dependentes;
 	
-	@OneToMany(mappedBy = "funcionario_endereco")
-	private List<Endereco> enderecos;
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "endereco")
+	private Endereco enderecos;
 
 	public Funcionario() {
 		dependentes = new ArrayList<Dependente>();
-		enderecos = new ArrayList<Endereco>(); 
 	}
 
 	public Funcionario(String nome, String sexo, Date data_aniversario, Double salario) {
@@ -61,7 +63,6 @@ public class Funcionario {
 		this.dataAniversario = data_aniversario;
 		this.salario = salario;
 		dependentes = new ArrayList<Dependente>();
-		enderecos = new ArrayList<Endereco>(); 
 	}
 
 	public Funcionario(Integer numero, String nome, String sexo, Date data_aniversario, Double salario) {
@@ -71,7 +72,6 @@ public class Funcionario {
 		this.dataAniversario = data_aniversario;
 		this.salario = salario;
 		dependentes = new ArrayList<Dependente>();
-		enderecos = new ArrayList<Endereco>(); 
 	}
 
 	public Integer getNumero() {
@@ -114,8 +114,8 @@ public class Funcionario {
 		this.salario = salario;
 	}
 
-	public void addEndereco(Endereco endereco) {
-		this.enderecos.add(endereco);
+	public void setEndereco(Endereco endereco) {
+		this.enderecos = endereco;
 	}
 
 	public Departamento getDepartamento() {

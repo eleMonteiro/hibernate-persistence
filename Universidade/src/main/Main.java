@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import controller.DepartamentoController;
+import controller.DependenteController;
 import controller.FuncionarioController;
 import controller.ProjetoController;
 import modelos.Departamento;
@@ -52,7 +53,8 @@ public class Main {
 		System.out.println("| [2] Remover                     |");
 		System.out.println("| [3] Ver Todos                   |");
 		System.out.println("| [4] Buscar por ID               |");
-		System.out.println("| [5] Adicionar Pesquisador       |");
+		System.out.println("| [5] Buscar por Departamento     |");
+		System.out.println("| [6] Adicionar Pesquisador       |");
 		System.out.println("+---------------------------------+");
 	}
 
@@ -292,6 +294,40 @@ public class Main {
 
 					break;
 
+				case "5":
+					System.out.println("Informe o numero do funcionario: ");
+					Integer numeroFuncDependente = Integer.parseInt(scanner.nextLine());
+
+					try {
+						
+					} catch (NumberFormatException e) {
+						System.out.println("O numero informado nao e valido");
+						break;
+					}
+					
+					System.out.println("Informe o nome do dependente: ");
+					String nomeDependente = scanner.nextLine();
+
+					System.out.println("Informe o sexo do dependente: ");
+					String sexo = scanner.nextLine();
+
+					System.out.println("Informe a data de aniversario(nascimento) do dependente: ");
+					Date dataAniversarioDependente = null;
+					
+					try {
+						dataAniversarioFuncionario = new SimpleDateFormat("dd/MM/yyyy").parse(scanner.nextLine());
+					} catch (ParseException e) {
+						System.out.println("A data informada nao e valida");
+						break;
+					}
+
+					System.out.println("Informe o grau de parentesco do dependente com o funcionario: ");
+					String grauparentesco= scanner.nextLine();
+					
+					new DependenteController().adicionarDependente(numeroFuncDependente, nomeDependente, sexo, dataAniversarioDependente, grauparentesco);
+					
+					System.out.println("Dependente cadastrado");
+					break;
 				default:
 					System.out.println("Opcao invalida");
 					break;
@@ -374,6 +410,21 @@ public class Main {
 					break;
 					
 				case "5":
+					System.out.println("Informe o numero do departamento: ");
+
+					try {
+						Integer numero = Integer.parseInt(scanner.nextLine());
+						List<Projeto> projetosDept = new ProjetoController().buscarProjetoPorDepartamento(numero);
+
+						for (Projeto projeto : projetosDept)
+							System.out.println(projeto);
+					} catch (NumberFormatException e) {
+						System.out.println("O numero informado não e valido!");
+					}
+
+					break;
+										
+				case "6":
 					System.out.println("Informe o numero do projeto: ");
 
 					try {

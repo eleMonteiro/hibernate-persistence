@@ -92,6 +92,14 @@ public class Dependente {
 	public void setGrauParentesco(String grauParentesco) {
 		this.grauParentesco = grauParentesco;
 	}
+	
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
 
 	@Override
 	public String toString() {
