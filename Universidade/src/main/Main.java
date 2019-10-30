@@ -52,6 +52,7 @@ public class Main {
 		System.out.println("| [2] Remover                     |");
 		System.out.println("| [3] Ver Todos                   |");
 		System.out.println("| [4] Buscar por ID               |");
+		System.out.println("| [5] Adicionar Pesquisador       |");
 		System.out.println("+---------------------------------+");
 	}
 
@@ -371,6 +372,24 @@ public class Main {
 					}
 
 					break;
+					
+				case "5":
+					System.out.println("Informe o numero do projeto: ");
+
+					try {
+						Integer numero = Integer.parseInt(scanner.nextLine());
+						System.out.println("Informe o numero do pesquisador: ");
+						Integer numeroPesquisador = Integer.parseInt(scanner.nextLine());
+	
+						
+						new ProjetoController().adicionarPesquisadorProjeto(numero, numeroPesquisador);
+
+						System.out.println("Cadastrado!");
+					} catch (NumberFormatException e) {
+						System.out.println("O numero informado não e valido!");
+					}
+
+					break;
 
 				default:
 					System.out.println("Opcao invalida");
@@ -378,6 +397,7 @@ public class Main {
 				}
 
 				break;
+				
 
 			default:
 				System.out.println("Opcao invalida");

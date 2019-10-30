@@ -2,6 +2,7 @@ package modelos;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -74,11 +75,17 @@ public class Projeto {
 	public void setTempo(Integer tempo) {
 		this.tempo = tempo;
 	}
+	
+	public void addPesquisador(Pesquisador pesquisador) {
+		this.pesquisadores.add(pesquisador);
+	}
 
 	@Override
 	public String toString() {
 		return "Projeto { Numero: " + numero + ", Nome: " + nome + ", Tempo: " + tempo + " }";
 	}
+
+	
 
 	
 	

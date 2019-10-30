@@ -1,5 +1,6 @@
 package modelos;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,12 +26,13 @@ public class Pesquisador extends Funcionario {
 	private List<Projeto> projetos;
 
 	public Pesquisador() {
-
+		this.projetos = new ArrayList<Projeto>();
 	}
 
 	public Pesquisador(String nome, String sexo, Date data_aniversario, Double salario, String area_atuacao) {
 		super(nome, sexo, data_aniversario, salario);
 		this.areaAtuacao = area_atuacao;
+		this.projetos = new ArrayList<Projeto>();
 	}
 
 	public String getAreaAtuacao() {
@@ -41,6 +43,10 @@ public class Pesquisador extends Funcionario {
 		this.areaAtuacao = areaAtuacao;
 	}
 
+	public void addProjeto(Projeto projeto) {
+		this.projetos.add(projeto);
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString() + " > Pesquisador [areaAtuacao=" + areaAtuacao + ", projetos=" + projetos + "]";

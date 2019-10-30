@@ -5,8 +5,10 @@ import java.util.List;
 import javax.persistence.PersistenceException;
 
 import dao.ProjetoDAO;
+import dao.jpa.FuncionarioJPADAO;
 import dao.jpa.ProjetoJPADAO;
 import modelos.Departamento;
+import modelos.Pesquisador;
 import modelos.Projeto;
 
 public class ProjetoController {
@@ -56,6 +58,35 @@ public class ProjetoController {
 			}
 		}
 	}
+	
+	public void adicionarPesquisadorProjeto(Integer numero, Integer numeroPesquisador) {
+		ProjetoDAO projetoDAO = new ProjetoJPADAO();
+		
+		try {
+			projetoDAO.beginTransaction();
+			
+			Projeto projeto = projetoDAO.find(numero);
+			Pesquisador pesquisador = (Pesquisador) new FuncionarioJPADAO().find(numeroPesquisador);
+			
+			projeto.addPesquisador(pesquisador);
+			pesquisador.addProjeto(projeto);
+			
+			projetoDAO.save(projeto);
+			
+			
+			projetoDAO.commit();
+		} catch (IllegalStateException | PersistenceException e) {
+			projetoDAO.rollback();
+
+			e.printStackTrace();
+		} finally {
+			try {
+				projetoDAO.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public List<Projeto> buscarTodosOsProjetos() {
 		ProjetoDAO projetoDAO = new ProjetoJPADAO();
@@ -68,5 +99,7 @@ public class ProjetoController {
 
 		return projetoDAO.find(numero);
 	}
+
+	
 
 }

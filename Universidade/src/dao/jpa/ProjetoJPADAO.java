@@ -8,5 +8,5 @@ public class ProjetoJPADAO extends GenericoJPADAO<Projeto> implements ProjetoDAO
 	public ProjetoJPADAO() {
 		super(Projeto.class);
 	}
-
+	
 }
