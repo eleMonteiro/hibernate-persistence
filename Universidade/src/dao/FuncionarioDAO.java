@@ -1,6 +1,6 @@
 package dao;
 
-import modelos.Funcionario;
+import models.Funcionario;
 
 public interface FuncionarioDAO extends GenericoDAO<Funcionario> {
 

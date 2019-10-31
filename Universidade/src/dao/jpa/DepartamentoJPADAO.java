@@ -1,7 +1,7 @@
 package dao.jpa;
 
 import dao.DepartamentoDAO;
-import modelos.Departamento;
+import models.Departamento;
 
 public class DepartamentoJPADAO extends GenericoJPADAO<Departamento> implements DepartamentoDAO {
 

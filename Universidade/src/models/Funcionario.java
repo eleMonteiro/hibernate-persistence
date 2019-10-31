@@ -1,4 +1,4 @@
-package modelos;
+package models;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,7 +27,7 @@ public class Funcionario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer numeroFuncionario;
+	private Integer numero;
 
 	@NotNull
 	private String nome;
@@ -42,44 +42,39 @@ public class Funcionario {
 	@NotEmpty
 	private Double salario;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn
+	private Endereco endereco;
+
 	@ManyToOne
-	@JoinColumn(name = "numero")
+	@JoinColumn
 	private Departamento departamento;
 
 	@OneToMany(mappedBy = "funcionario")
 	private List<Dependente> dependentes;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "endereco")
-	private Endereco enderecos;
 
 	public Funcionario() {
-		dependentes = new ArrayList<Dependente>();
+		this.dependentes = new ArrayList<>();
 	}
 
-	public Funcionario(String nome, String sexo, Date data_aniversario, Double salario) {
+	public Funcionario(String nome, String sexo, Date dataAniversario, Double salario, Endereco endereco,
+			Departamento departamento) {
+		super();
 		this.nome = nome;
 		this.sexo = sexo;
-		this.dataAniversario = data_aniversario;
+		this.dataAniversario = dataAniversario;
 		this.salario = salario;
-		dependentes = new ArrayList<Dependente>();
-	}
-
-	public Funcionario(Integer numero, String nome, String sexo, Date data_aniversario, Double salario) {
-		this.numeroFuncionario = numero;
-		this.nome = nome;
-		this.sexo = sexo;
-		this.dataAniversario = data_aniversario;
-		this.salario = salario;
-		dependentes = new ArrayList<Dependente>();
+		this.endereco = endereco;
+		this.departamento = departamento;
+		this.dependentes = new ArrayList<>();
 	}
 
 	public Integer getNumero() {
-		return numeroFuncionario;
+		return numero;
 	}
 
 	public void setNumero(Integer numero) {
-		this.numeroFuncionario = numero;
+		this.numero = numero;
 	}
 
 	public String getNome() {
@@ -114,8 +109,12 @@ public class Funcionario {
 		this.salario = salario;
 	}
 
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
 	public void setEndereco(Endereco endereco) {
-		this.enderecos = endereco;
+		this.endereco = endereco;
 	}
 
 	public Departamento getDepartamento() {
@@ -126,12 +125,19 @@ public class Funcionario {
 		this.departamento = departamento;
 	}
 
-	
+	public List<Dependente> getDependentes() {
+		return dependentes;
+	}
+
+	public void setDependentes(List<Dependente> dependentes) {
+		this.dependentes = dependentes;
+	}
+
 	@Override
 	public String toString() {
-		return "Funcionario [numero=" + numeroFuncionario + ", nome=" + nome + ", sexo=" + sexo + ", dataAniversario="
-				+ dataAniversario + ", salario=" + salario + ", departamento=" + departamento + ", dependentes="
-				+ dependentes + ", enderecos=" + enderecos + "]";
+		return "Funcionario [numero=" + numero + ", nome=" + nome + ", sexo=" + sexo + ", dataAniversario="
+				+ dataAniversario + ", salario=" + salario + ", endereco=" + endereco + ", departamento=" + departamento
+				+ ", dependentes=" + dependentes + "]";
 	}
 
 }

@@ -1,4 +1,4 @@
-package modelos;
+package models;
 
 import java.util.Date;
 
@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -33,24 +34,20 @@ public class Dependente {
 	private String grauParentesco;
 
 	@ManyToOne
+	@JoinColumn
 	private Funcionario funcionario;
 
 	public Dependente() {
+
 	}
 
-	public Dependente(String nome, String sexo, Date data_aniversario, String grau_parentesco) {
+	public Dependente(String nome, String sexo, Date dataAniversario, String grauParentesco, Funcionario funcionario) {
+		super();
 		this.nome = nome;
 		this.sexo = sexo;
-		this.dataAniversario = data_aniversario;
-		this.grauParentesco = grau_parentesco;
-	}
-
-	public Dependente(Integer numero, String nome, String sexo, Date data_aniversario, String grau_parentesco) {
-		this.numero = numero;
-		this.nome = nome;
-		this.sexo = sexo;
-		this.dataAniversario = data_aniversario;
-		this.grauParentesco = grau_parentesco;
+		this.dataAniversario = dataAniversario;
+		this.grauParentesco = grauParentesco;
+		this.funcionario = funcionario;
 	}
 
 	public Integer getNumero() {
@@ -92,7 +89,7 @@ public class Dependente {
 	public void setGrauParentesco(String grauParentesco) {
 		this.grauParentesco = grauParentesco;
 	}
-	
+
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}
@@ -103,8 +100,8 @@ public class Dependente {
 
 	@Override
 	public String toString() {
-		return "Dependente { Nome: " + nome + ", Sexo: " + sexo + ", Data Aniversario: " + dataAniversario
-				+ ", Grau Parentesco: " + grauParentesco + " }";
+		return "Dependente [numero=" + numero + ", nome=" + nome + ", sexo=" + sexo + ", dataAniversario="
+				+ dataAniversario + ", grauParentesco=" + grauParentesco + "]";
 	}
 
 }

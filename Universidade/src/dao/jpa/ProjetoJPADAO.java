@@ -6,8 +6,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import dao.ProjetoDAO;
-import jpa.JPAUtil;
-import modelos.Projeto;
+import models.Projeto;
+import util.JPAUtil;
 
 public class ProjetoJPADAO extends GenericoJPADAO<Projeto> implements ProjetoDAO {
 
@@ -18,13 +18,12 @@ public class ProjetoJPADAO extends GenericoJPADAO<Projeto> implements ProjetoDAO
 	@SuppressWarnings("unchecked")
 	public List<Projeto> findByDepartamento(Integer numeroDepartamento) {
 
-			EntityManager em = JPAUtil.getEntityManager();
-			Query query = em.createQuery("SELECT c FROM Projeto c "
-									   + "WHERE c.departamento.numero = :numero");
-			query.setParameter("numero", numeroDepartamento);
-			
-			return query.getResultList();
-		
+		EntityManager em = JPAUtil.getEntityManager();
+		Query query = em.createQuery("SELECT c FROM Projeto c " + "WHERE c.departamento.numero = :numero");
+		query.setParameter("numero", numeroDepartamento);
+
+		return query.getResultList();
+
 	}
-	
+
 }

@@ -6,7 +6,7 @@ import javax.persistence.PersistenceException;
 
 import dao.DepartamentoDAO;
 import dao.jpa.DepartamentoJPADAO;
-import modelos.Departamento;
+import models.Departamento;
 
 public class DepartamentoController {
 

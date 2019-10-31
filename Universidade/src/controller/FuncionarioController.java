@@ -5,37 +5,42 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
+import dao.DepartamentoDAO;
 import dao.FuncionarioDAO;
-import dao.LimpezaDAO;
-import dao.PesquisadorDAO;
-import dao.SecretarioDAO;
+import dao.FuncionarioLimpezaDAO;
+import dao.FuncionarioPesquisadorDAO;
+import dao.FuncionarioSecretarioDAO;
+import dao.jpa.DepartamentoJPADAO;
 import dao.jpa.FuncionarioJPADAO;
-import dao.jpa.LimpezaJPADAO;
-import dao.jpa.PesquisadorJPADAO;
-import dao.jpa.SecretarioJPADAO;
-import modelos.Departamento;
-import modelos.Endereco;
-import modelos.Funcionario;
-import modelos.Limpeza;
-import modelos.Pesquisador;
-import modelos.Secretario;
+import dao.jpa.FuncionarioLimpezaJPADAO;
+import dao.jpa.FuncionarioPesquisadorJPADAO;
+import dao.jpa.FuncionarioSecretarioJPADAO;
+import models.Departamento;
+import models.Endereco;
+import models.Funcionario;
+import models.FuncionarioLimpeza;
+import models.FuncionarioPesquisador;
+import models.FuncionarioSecretario;
 
 public class FuncionarioController {
 
-	public void adicionarPesquisador(String nome, String rua, Integer numeroCasa, String cidade, String sexo,
-			Date dataAniversario, Double salario, String areaAtuacao, Integer departamento) {
-		PesquisadorDAO pesquisadorDAO = new PesquisadorJPADAO();
+	public void adicionarPesquisador(String nome, String sexo, Date dataAniversario, Double salario, String rua,
+			Integer numero, String cidade, Integer numeroDepartamento, String areaAtuacao) {
+		FuncionarioPesquisadorDAO pesquisadorDAO = new FuncionarioPesquisadorJPADAO();
+		DepartamentoDAO departamentoDAO = new DepartamentoJPADAO();
 
-		Endereco enderecoFuncionario = new Endereco(rua, numeroCasa, cidade);
-
-		Pesquisador pesquisador = new Pesquisador(nome, sexo, dataAniversario, salario, areaAtuacao);
-		pesquisador.setEndereco(enderecoFuncionario);
-		pesquisador.setDepartamento(new Departamento(departamento));
-		
 		try {
-			pesquisadorDAO.beginTransaction();
-			pesquisadorDAO.save(pesquisador);
-			pesquisadorDAO.commit();
+			Endereco endereco = new Endereco(rua, numero, cidade);
+			Departamento departamento = departamentoDAO.find(numeroDepartamento);
+
+			if (departamento != null) {
+				FuncionarioPesquisador pesquisador = new FuncionarioPesquisador(numeroDepartamento, nome, sexo,
+						dataAniversario, salario, endereco, departamento, areaAtuacao);
+
+				pesquisadorDAO.beginTransaction();
+				pesquisadorDAO.save(pesquisador);
+				pesquisadorDAO.commit();
+			}
 		} catch (IllegalStateException | PersistenceException e) {
 			pesquisadorDAO.rollback();
 			e.printStackTrace();
@@ -48,21 +53,23 @@ public class FuncionarioController {
 		}
 	}
 
-	public void adicionarSecretario(String nome, String rua, Integer numeroCasa, String cidade, String sexo,
-			Date dataAniversario, Double salario, String grauEscolaridade, Integer departamento) {
-		SecretarioDAO secretarioDAO = new SecretarioJPADAO();
+	public void adicionarSecretario(String nome, String sexo, Date dataAniversario, Double salario, String rua,
+			Integer numero, String cidade, Integer numeroDepartamento, String grauEscolaridade) {
+		FuncionarioSecretarioDAO secretarioDAO = new FuncionarioSecretarioJPADAO();
+		DepartamentoDAO departamentoDAO = new DepartamentoJPADAO();
 
-		Endereco enderecoFuncionario = new Endereco(rua, numeroCasa, cidade);
-
-		Secretario secretario = new Secretario(nome, sexo, dataAniversario, salario, grauEscolaridade);
-		secretario.setEndereco(enderecoFuncionario);
-		secretario.setDepartamento(new Departamento(departamento));
-		
 		try {
-			secretarioDAO.beginTransaction();
-			secretarioDAO.save(secretario);
-			secretarioDAO.commit();
+			Endereco endereco = new Endereco(rua, numero, cidade);
+			Departamento departamento = departamentoDAO.find(numeroDepartamento);
 
+			if (departamento != null) {
+				FuncionarioSecretario secretario = new FuncionarioSecretario(nome, sexo, dataAniversario, salario,
+						endereco, departamento, grauEscolaridade);
+
+				secretarioDAO.beginTransaction();
+				secretarioDAO.save(secretario);
+				secretarioDAO.commit();
+			}
 		} catch (IllegalStateException | PersistenceException e) {
 			secretarioDAO.rollback();
 			e.printStackTrace();
@@ -75,26 +82,31 @@ public class FuncionarioController {
 		}
 	}
 
-	public void adicionarFuncionarioLimpeza(String nome, String rua, Integer numeroCasa, String cidade, String sexo,
-			Date dataAniversario, Double salario, Integer jornadaTrabalho, Integer idGerente, String cargo, Integer departamento) {
-		LimpezaDAO limpezaDAO = new LimpezaJPADAO();
+	public void adicionarFuncionarioLimpeza(String nome, String sexo, Date dataAniversario, Double salario, String rua,
+			Integer numero, String cidade, Integer numeroDepartamento, Integer jornadaTrabalho, String cargo,
+			Integer numeroGerente) {
+		FuncionarioLimpezaDAO funcionarioLimpezaDAO = new FuncionarioLimpezaJPADAO();
+		DepartamentoDAO departamentoDAO = new DepartamentoJPADAO();
 
-		Endereco enderecoFuncionario = new Endereco(rua, numeroCasa, cidade);
-
-		Limpeza limpeza = new Limpeza(nome, sexo, dataAniversario, salario, jornadaTrabalho, cargo);
-		limpeza.setEndereco(enderecoFuncionario);
-		limpeza.setDepartamento(new Departamento(departamento));
 		try {
-			limpezaDAO.beginTransaction();
-			limpezaDAO.save(limpeza);
-			limpezaDAO.commit();
+			Endereco endereco = new Endereco(rua, numero, cidade);
+			Departamento departamento = departamentoDAO.find(numeroDepartamento);
+			FuncionarioLimpeza gerente = funcionarioLimpezaDAO.find(numeroGerente);
+
+			if (departamento != null && gerente != null) {
+				FuncionarioLimpeza funcionarioLimpeza = new FuncionarioLimpeza(nome, sexo, dataAniversario, salario,
+						endereco, departamento, jornadaTrabalho, cargo, gerente);
+
+				funcionarioLimpezaDAO.beginTransaction();
+				funcionarioLimpezaDAO.save(funcionarioLimpeza);
+				funcionarioLimpezaDAO.commit();
+			}
 		} catch (IllegalStateException | PersistenceException e) {
-			limpezaDAO.rollback();
-			
+			funcionarioLimpezaDAO.rollback();
 			e.printStackTrace();
 		} finally {
 			try {
-				limpezaDAO.close();
+				funcionarioLimpezaDAO.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -106,13 +118,10 @@ public class FuncionarioController {
 
 		try {
 			funcionarioDAO.beginTransaction();
-
 			funcionarioDAO.delete(funcionarioDAO.find(numero));
-
 			funcionarioDAO.commit();
 		} catch (IllegalStateException | PersistenceException e) {
 			funcionarioDAO.rollback();
-
 			e.printStackTrace();
 		} finally {
 			try {

@@ -1,6 +1,6 @@
 package dao;
 
-import modelos.Dependente;
+import models.Dependente;
 
 public interface DependenteDAO extends GenericoDAO<Dependente> {
 

@@ -1,5 +1,6 @@
-package modelos;
+package models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -27,21 +28,15 @@ public class Departamento {
 	private List<Projeto> projetos;
 
 	public Departamento() {
-
-	}
-
-	public Departamento(Integer numero) {
-		this.numero = numero;
+		this.funcionarios = new ArrayList<>();
+		this.projetos = new ArrayList<>();
 	}
 
 	public Departamento(String nome) {
-		this.nome = nome;
-	}
-
-	public Departamento(Integer numero, String nome) {
 		super();
-		this.numero = numero;
 		this.nome = nome;
+		this.funcionarios = new ArrayList<>();
+		this.projetos = new ArrayList<>();
 	}
 
 	public Integer getNumero() {
@@ -60,9 +55,25 @@ public class Departamento {
 		this.nome = nome;
 	}
 
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
+	}
+
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
+	}
+
+	public List<Projeto> getProjetos() {
+		return projetos;
+	}
+
+	public void setProjetos(List<Projeto> projetos) {
+		this.projetos = projetos;
+	}
+
 	@Override
 	public String toString() {
-		return "Departamento { Numero: " + numero + ", Nome: " + nome + " }";
+		return "Departamento [numero=" + numero + ", nome=" + nome + "]";
 	}
 
 }

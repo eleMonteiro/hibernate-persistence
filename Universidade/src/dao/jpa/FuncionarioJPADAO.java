@@ -1,7 +1,7 @@
 package dao.jpa;
 
 import dao.FuncionarioDAO;
-import modelos.Funcionario;
+import models.Funcionario;
 
 public class FuncionarioJPADAO extends GenericoJPADAO<Funcionario> implements FuncionarioDAO {
 

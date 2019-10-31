@@ -1,5 +1,9 @@
-/modelos/
 /META-INF/
-/main/
 /controller/
 /dao/
+/jpa/
+/main/
+/modelos/
+/models/
+/util/
+/view/

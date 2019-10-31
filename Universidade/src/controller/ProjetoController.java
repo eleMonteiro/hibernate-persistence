@@ -4,33 +4,37 @@ import java.util.List;
 
 import javax.persistence.PersistenceException;
 
-import dao.FuncionarioDAO;
+import dao.DepartamentoDAO;
+import dao.FuncionarioPesquisadorDAO;
+import dao.PesquisadorProjetoDAO;
 import dao.ProjetoDAO;
-import dao.TrabalhoDAO;
-import dao.jpa.FuncionarioJPADAO;
+import dao.jpa.DepartamentoJPADAO;
+import dao.jpa.FuncionarioPesquisadorJPADAO;
+import dao.jpa.PesquisadorProjetoJPADAO;
 import dao.jpa.ProjetoJPADAO;
-import dao.jpa.TrabalhoJPADAO;
-import modelos.Departamento;
-import modelos.Pesquisador;
-import modelos.Projeto;
-import modelos.Trabalho;
+import models.Departamento;
+import models.FuncionarioPesquisador;
+import models.PesquisadorProjeto;
+import models.Projeto;
 
 public class ProjetoController {
 
 	public void adicionarProjeto(String nome, Integer tempo, Integer numeroDepartamento) {
 		ProjetoDAO projetoDAO = new ProjetoJPADAO();
-
-		Departamento departamento = new DepartamentoController().buscarDepartamentoPorNumero(numeroDepartamento);
+		DepartamentoDAO departamentoDAO = new DepartamentoJPADAO();
 
 		try {
-			projetoDAO.beginTransaction();
+			Departamento departamento = departamentoDAO.find(numeroDepartamento);
 
-			projetoDAO.save(new Projeto(nome, tempo, departamento));
+			if (departamento != null) {
+				Projeto projeto = new Projeto(nome, tempo, departamento);
 
-			projetoDAO.commit();
+				projetoDAO.beginTransaction();
+				projetoDAO.save(projeto);
+				projetoDAO.commit();
+			}
 		} catch (IllegalStateException | PersistenceException e) {
 			projetoDAO.rollback();
-
 			e.printStackTrace();
 		} finally {
 			try {
@@ -46,13 +50,10 @@ public class ProjetoController {
 
 		try {
 			projetoDAO.beginTransaction();
-
 			projetoDAO.delete(projetoDAO.find(numero));
-
 			projetoDAO.commit();
 		} catch (IllegalStateException | PersistenceException e) {
 			projetoDAO.rollback();
-
 			e.printStackTrace();
 		} finally {
 			try {
@@ -62,33 +63,30 @@ public class ProjetoController {
 			}
 		}
 	}
-	
-	public void adicionarPesquisadorProjeto(Integer numero, Integer numeroPesquisador, Integer horas) {
+
+	public void adicionarPesquisadorProjeto(Integer numeroProjeto, Integer numeroPesquisador, Integer horasSemanais) {
+		FuncionarioPesquisadorDAO pesquisadorDAO = new FuncionarioPesquisadorJPADAO();
 		ProjetoDAO projetoDAO = new ProjetoJPADAO();
-		FuncionarioDAO pesquisadorDAO = new FuncionarioJPADAO();
-		TrabalhoDAO trabalhoDAO = new TrabalhoJPADAO();
-		
+		PesquisadorProjetoDAO pesquisadorProjetoDAO = new PesquisadorProjetoJPADAO();
+
 		try {
-			projetoDAO.beginTransaction();
-			
-			Projeto projeto = projetoDAO.find(numero);
-			Pesquisador pesquisador = (Pesquisador) pesquisadorDAO.find(numeroPesquisador);
-			
-			Trabalho trabalho = new Trabalho(horas);
-			trabalho.setProjeto(projeto);
-			trabalho.setPesquisador(pesquisador);
-			
-			trabalhoDAO.save(trabalho);
-			
-			
-			projetoDAO.commit();
+			FuncionarioPesquisador pesquisador = pesquisadorDAO.find(numeroPesquisador);
+			Projeto projeto = projetoDAO.find(numeroProjeto);
+
+			if (pesquisador != null && projeto != null) {
+				PesquisadorProjeto pesquisadorProjeto = new PesquisadorProjeto(pesquisador, projeto, horasSemanais);
+
+				pesquisadorProjetoDAO.beginTransaction();
+				pesquisadorProjetoDAO.save(pesquisadorProjeto);
+				pesquisadorProjetoDAO.commit();
+			}
 		} catch (IllegalStateException | PersistenceException e) {
-			projetoDAO.rollback();
+			pesquisadorProjetoDAO.rollback();
 
 			e.printStackTrace();
 		} finally {
 			try {
-				projetoDAO.close();
+				pesquisadorProjetoDAO.close();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -112,7 +110,5 @@ public class ProjetoController {
 
 		return projetoDAO.findByDepartamento(numero);
 	}
-
-	
 
 }

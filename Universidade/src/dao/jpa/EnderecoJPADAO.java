@@ -1,7 +1,7 @@
 package dao.jpa;
 
 import dao.EnderecoDAO;
-import modelos.Endereco;
+import models.Endereco;
 
 public class EnderecoJPADAO extends GenericoJPADAO<Endereco> implements EnderecoDAO {
 

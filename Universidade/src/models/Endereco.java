@@ -1,4 +1,4 @@
-package modelos;
+package models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,8 +25,8 @@ public class Endereco {
 	@NotNull
 	private String cidade;
 
-	@OneToOne(mappedBy = "enderecos")
-	private Funcionario funcionario_endereco;
+	@OneToOne(mappedBy = "endereco")
+	private Funcionario funcionario;
 
 	public Endereco() {
 
@@ -72,16 +72,16 @@ public class Endereco {
 	}
 
 	public Funcionario getFuncionario() {
-		return funcionario_endereco;
+		return funcionario;
 	}
 
-	public void setFuncionario(Funcionario funcionario_endereco) {
-		this.funcionario_endereco = funcionario_endereco;
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
 	}
 
 	@Override
 	public String toString() {
-		return "Endereco { Rua: " + rua + ", Numero: " + numero + ", Cidade: " + cidade + " }";
+		return "Endereco [id=" + id + ", rua=" + rua + ", numero=" + numero + ", cidade=" + cidade + "]";
 	}
 
 }

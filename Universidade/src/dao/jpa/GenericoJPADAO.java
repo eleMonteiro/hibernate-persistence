@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
 
 import dao.GenericoDAO;
-import jpa.JPAUtil;
+import util.JPAUtil;
 
 public class GenericoJPADAO<T> implements GenericoDAO<T> {
 
