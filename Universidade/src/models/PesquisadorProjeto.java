@@ -67,4 +67,11 @@ public class PesquisadorProjeto {
 		this.horasSemanais = horasSemanais;
 	}
 
+	@Override
+	public String toString() {
+		return ""+ projeto;
+	}
+
+	
+	
 }

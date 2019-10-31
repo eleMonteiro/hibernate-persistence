@@ -35,6 +35,7 @@ public class DepartamentoView {
 
 			switch (opcaoMenuDeDepartamentos) {
 			case "0":
+				System.out.println("Voltando...");
 				executando = false;
 				break;
 

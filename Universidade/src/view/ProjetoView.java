@@ -38,6 +38,7 @@ public class ProjetoView {
 			switch (opcaoMenuDeProjetos) {
 			case "0":
 				System.out.println("Voltando...");
+				executando = false;
 				break;
 
 			case "1":
