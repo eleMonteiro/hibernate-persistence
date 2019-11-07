@@ -40,7 +40,7 @@ public class FuncionarioView {
 
 			switch (opcaoMenuDeFuncionarios) {
 			case "0":
-				System.out.println("Voltando...");
+				executando = false;
 				break;
 
 			case "1":
