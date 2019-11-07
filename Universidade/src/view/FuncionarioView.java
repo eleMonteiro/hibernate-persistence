@@ -208,10 +208,9 @@ public class FuncionarioView {
 				String sexo = scanner.nextLine();
 
 				System.out.println("Informe a data de aniversario(nascimento) do dependente: ");
-				Date dataAniversarioDependente = null;
-
+				Date dataAniversarioDependente;
 				try {
-					dataAniversarioFuncionario = new SimpleDateFormat("dd/MM/yyyy").parse(scanner.nextLine());
+					dataAniversarioDependente = new SimpleDateFormat("dd/MM/yyyy").parse(scanner.nextLine());
 				} catch (ParseException e) {
 					System.out.println("A data informada nao e valida");
 					break;
